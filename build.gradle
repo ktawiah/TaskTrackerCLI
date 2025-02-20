@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.springframework.shell:spring-shell-starter'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.18.2'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.shell:spring-shell-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

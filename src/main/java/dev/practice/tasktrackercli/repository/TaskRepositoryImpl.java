@@ -2,6 +2,7 @@ package dev.practice.tasktrackercli.repository;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dev.practice.tasktrackercli.model.Task;
 import dev.practice.tasktrackercli.model.TaskStatus;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     private final ObjectMapper objectMapper;
 
     public TaskRepositoryImpl() throws IOException {
-        String jsonFilePath = Paths.get("java", "dev", "practice", "tasktrackercli", "data", "tasks.json").toString();
+        String jsonFilePath = Paths.get("src","main","java", "dev", "practice", "tasktrackercli", "data", "tasks.json").toString();
         File file = new File(jsonFilePath);
 
         if (!file.exists()) {
@@ -31,17 +33,18 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
         this.jsonFile = file;
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     private List<Task> readTasksFromFile() {
         try {
             if (jsonFile.length() == 0) {
-                return List.of();
+                return new ArrayList<>();
             }
             return objectMapper.readValue(jsonFile, new TypeReference<List<Task>>() {});
         } catch (IOException e) {
-            logger.error("Error reading tasks from file: {}", e.getMessage(), e); // Log the error
-            return List.of();
+            logger.error("Error reading tasks from file: {}", e.getMessage(), e);
+            return new ArrayList<>();
         }
     }
 
@@ -49,7 +52,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, tasks);
         } catch (IOException e) {
-            logger.error("Error writing tasks to file: {}", e.getMessage(), e); // Log the error
+            logger.error("Error writing tasks to file: {}", e.getMessage(), e);
         }
     }
 
