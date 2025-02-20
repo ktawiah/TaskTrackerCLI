@@ -11,7 +11,10 @@ public class Task {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Task(String description,TaskStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Task() {
+    }
+
+    public Task(String description, TaskStatus status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = idCounter++;
         this.description = description;
         this.status = status;
