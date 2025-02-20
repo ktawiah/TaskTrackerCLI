@@ -79,7 +79,7 @@ public class TaskServicesImpl implements TaskServices  {
 
     @Command(
             command = "mark-as",
-            description = "Marks task based on status specified (TODO, NOT_STARTED, DONE)"
+            description = "Marks task based on status specified (TODO, NOT_STARTED, COMPLETED)"
     )
     @Override
     public String markTaskByStatus(
